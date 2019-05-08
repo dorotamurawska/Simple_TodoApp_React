@@ -3,77 +3,70 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import Task from './Task';
 
+const firstNumberTask = 1;
 
 class Task {
     constructor(number) {
         this.number = number;
-        this.label = "Task number " + this.number;
-        this.id = Math.floor(Date.now() / 1000 * Math.random());
+        this.label = `Task number ${this.number}`;
+        this.id = this.randomNumber();
     }
+    randomNumber() { Math.floor(Date.now() / 1000 * Math.random()) };
 }
-
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             addTask: [],
-            numberAddTask: 1
+            numberAddTask: firstNumberTask,
         };
-        this.createTask = this.createTask.bind(this);  
-        this.removeTask = this.removeTask.bind(this);  
-        this.clearTask = this.clearTask.bind(this);   
     }
 
-    createTask() {
+    createTask = () => {
         const numberAddTask = this.state.numberAddTask;
         this.setState({
             numberAddTask: this.state.numberAddTask + 1,
             addTask: this.state.addTask.concat(new Task(numberAddTask))
-        })
+        });
     };
 
-    removeTask() {
+    removeTask = () => {
         this.state.addTask.pop()
-        if (this.state.numberAddTask > 1) {
+        if (this.state.numberAddTask > firstNumberTask) {
             this.setState({
-            numberAddTask: this.state.numberAddTask - 1
+                numberAddTask: this.state.numberAddTask - 1
             })
         }
     };
 
-    clearTask() {
+    clearTask = () => {
         this.setState({
             addTask: [],
-            numberAddTask: 1
+            numberAddTask: firstNumberTask
         })
     };
 
     render() {
-
         const todo = (oneTask) => {
-            return React.createElement('p',
-                { key: Math.floor(Date.now() * Math.random()) },
-                oneTask.label
+            return (
+                <p className='list-element' key={Math.floor(Date.now() * Math.random())}>{oneTask.label}</p>
             )
         };
-        
+
         const renderTodo = this.state.addTask.map(todo);
 
-
-        return ( 
-            <div >
-            <a href="#" onClick={this.createTask} >Add</a> 
-            <a href="#" onClick={this.removeTask} >Remove</a> 
-            <a href="#" onClick={this.clearTask} >Clear</a>
-            <div className="wrap">{renderTodo}</div>
-            </div >
+        return (
+            <>
+                <div className='wrap'>
+                    <a href="#" className='btn add' onClick={this.createTask} >Add</a>
+                    <a href="#" className='btn remove' onClick={this.removeTask} >Remove</a>
+                    <a href="#" className='btn clear' onClick={this.clearTask} >Clear</a>
+                </div >
+                <div className='list'>{renderTodo}</div>
+            </>
         );
     }
-
-
-
 }
 
-
-ReactDOM.render( < App / > , document.getElementById('root'));
+ReactDOM.render(< App />, document.getElementById('root'));

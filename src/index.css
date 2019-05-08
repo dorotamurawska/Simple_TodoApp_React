@@ -12,54 +12,63 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-div {
+.wrap {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   width: 500px;
   margin: 0 auto;
 }
-a {
-font-size: 30px;
+.btn {
 padding: 10px 30px;
 margin: 50px 10px;
-background-color: #5b5;
-border: solid 2px #555;
+background-color: #3B7833;
+border: solid 2px #222;
 border-radius: 10px;
 cursor: pointer;
 color: white;
+font-size: 30px;
 text-decoration: none;
+letter-spacing: 1px;
+box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0,0,0,.12);
 transition: .3s;
 }
 
-a:nth-child(2) {
-  background-color: #dd4;
+.btn.remove {
+  background-color:#E95912;
 }
 
-a:nth-child(3) {
-  background-color: #b55;
+.btn.clear {
+  background-color: #E30A15;
 }
 
-
-a:hover {
+.btn:hover {
   background-color: #fff;
   color: #333;
+  transform: scale(1.05);
 }
 
-.wrap {
+.list {
   display: flex;
-  flex-direction: column;
-  position: absolute;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
   width: 500px;
-  top: 150px;
-  left: 50%;
-  transform: translate(-50%, 0);
   font-size: 25px;
 }
 
-p {
+.list-element {
 margin: 10px;
-padding: 10px 30px;
+flex-basis: 45%;
+padding: 40px 30px;
 background-color: #ddd;
-border-radius: 30px;
+border-radius: 10px;
+box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0,0,0,.12);
 font-size: 18px;
+text-align: center;
+transition: .2s;
+}
+
+.list-element:hover {
+  transform: scale(1.1);
 }
