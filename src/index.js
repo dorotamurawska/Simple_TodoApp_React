@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import Task from './Task';
 
-const firstNumberTask = 1;
+const FIRST_NUMBER_TASK = 1;
 
 class Task {
     constructor(number) {
@@ -19,51 +18,45 @@ class App extends React.Component {
         super(props);
         this.state = {
             addTask: [],
-            numberAddTask: firstNumberTask,
+            nextTaskNumber: FIRST_NUMBER_TASK,
         };
     }
 
     createTask = () => {
-        const numberAddTask = this.state.numberAddTask;
+        const nextTaskNumber = this.state.nextTaskNumber;
         this.setState({
-            numberAddTask: this.state.numberAddTask + 1,
-            addTask: this.state.addTask.concat(new Task(numberAddTask))
+            nextTaskNumber: nextTaskNumber + 1,
+            addTask: this.state.addTask.concat(new Task(nextTaskNumber))
         });
     };
 
     removeTask = () => {
-        this.state.addTask.pop()
-        if (this.state.numberAddTask > firstNumberTask) {
-            this.setState({
-                numberAddTask: this.state.numberAddTask - 1
-            })
-        }
+        let nextTaskNumber = this.state.nextTaskNumber;
+        const removeTask = this.state.addTask;
+        nextTaskNumber = nextTaskNumber > FIRST_NUMBER_TASK ? nextTaskNumber - 1 : FIRST_NUMBER_TASK
+        this.setState({
+            nextTaskNumber: nextTaskNumber,
+            addTask: removeTask.splice(0, removeTask.length - 1),
+        })
     };
 
     clearTask = () => {
         this.setState({
             addTask: [],
-            numberAddTask: firstNumberTask
+            nextTaskNumber: FIRST_NUMBER_TASK
         })
     };
 
     render() {
-        const todo = (oneTask) => {
-            return (
-                <p className='list-element' key={Math.floor(Date.now() * Math.random())}>{oneTask.label}</p>
-            )
-        };
-
-        const renderTodo = this.state.addTask.map(todo);
-
+        const renderTodo = this.state.addTask.map((item, id) => <li className='list-element' key={id}>{item.label}</li>);
         return (
             <>
                 <div className='wrap'>
-                    <a href="#" className='btn add' onClick={this.createTask} >Add</a>
-                    <a href="#" className='btn remove' onClick={this.removeTask} >Remove</a>
-                    <a href="#" className='btn clear' onClick={this.clearTask} >Clear</a>
+                    <button className='btn add' onClick={this.createTask} >Add</button>
+                    <button className='btn remove' onClick={this.removeTask} >Remove</button>
+                    <button className='btn clear' onClick={this.clearTask} >Clear</button>
                 </div >
-                <div className='list'>{renderTodo}</div>
+                <ul className='list'>{renderTodo}</ul>
             </>
         );
     }
